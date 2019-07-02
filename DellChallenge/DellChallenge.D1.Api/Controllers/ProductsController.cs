@@ -1,8 +1,12 @@
-﻿using DellChallenge.D1.Api.Dal;
+﻿using System;
+using DellChallenge.D1.Api.Dal;
 using DellChallenge.D1.Api.Dto;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace DellChallenge.D1.Api.Controllers
 {
@@ -26,9 +30,10 @@ namespace DellChallenge.D1.Api.Controllers
 
         [HttpGet("{id}")]
         [EnableCors("AllowReactCors")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<string> Get(string id)
         {
-            return "value";
+            ProductDto product = _productsService.GetAll().FirstOrDefault(p => p.Id == id);
+            return Ok(product);
         }
 
         [HttpPost]
@@ -41,14 +46,32 @@ namespace DellChallenge.D1.Api.Controllers
 
         [HttpDelete("{id}")]
         [EnableCors("AllowReactCors")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
+            _productsService.Delete(id);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [EnableCors("AllowReactCors")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<string> Put([FromBody] Product product)
         {
+
+            var error = _productsService.Update(product);
+
+            if (error.Length > 0)
+            {
+                return BadRequest(error);
+            }
+
+            return Ok();
+
+        }
+
+        [HttpOptions()]
+        [EnableCors("AllowReactCors")]
+        public StatusCodeResult Options()
+        {
+            return Ok();
         }
     }
 }

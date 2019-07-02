@@ -15,6 +15,18 @@ class NewProduct extends Component {
   }
   handleSubmit = event => {
     event.preventDefault();
+
+    if (this.state.Name.length < 3) {
+        this.setState({
+            Error: "Name is too small. Must be minimum 3 characters.",
+        });
+      return;
+    }
+
+      this.setState({
+          Error: "",
+      });
+
     let postData = {
       Name: this.state.Name,
       Category: this.state.Category
@@ -61,10 +73,11 @@ class NewProduct extends Component {
             value={this.state.Name}
           />
           <span
-            className="text-danger field-validation-valid"
+            className="text-danger"
             data-valmsg-for="Name"
-            data-valmsg-replace="true"
-          />
+            data-valmsg-replace="true">
+              { this.state.Error }
+          </span>
         </div>
         <div className="form-group">
           <label className="control-label" htmlFor="Category">

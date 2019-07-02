@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DellChallenge.D1.Api.Dto;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DellChallenge.D1.Api.Dal
 {
@@ -39,6 +41,23 @@ namespace DellChallenge.D1.Api.Dal
                 Category = newProduct.Category,
                 Name = newProduct.Name
             };
+        }
+
+        public string Update(Product product)
+        {
+
+            var existingProduct = _context.Products.FirstOrDefault(p => p.Id == product.Id);
+
+            if (existingProduct == null)
+            {
+                return "Product does not exist";
+            };
+
+            existingProduct.Name = product.Name;
+            existingProduct.Category = product.Category;
+            _context.SaveChanges();
+
+            return "";
         }
 
         private ProductDto MapToDto(Product product)

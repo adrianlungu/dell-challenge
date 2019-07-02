@@ -9,6 +9,9 @@ namespace DellChallenge.B
             // Given the classes and interface below, please constructor the proper hierarchy.
             // Feel free to refactor and restructure the classes/interface below.
             // (Hint: Not all species and Fly and/or Swim)
+
+            new Groot().GetSpecies();
+            Console.ReadKey();
         }
     }
 
@@ -16,19 +19,10 @@ namespace DellChallenge.B
     {
         void Eat();
         void Drink();
-        void Fly();
-        void Swim();
+        void GetSpecies();
     }
 
-    public class Species
-    {
-        public virtual void GetSpecies()
-        {
-            Console.WriteLine($"Echo who am I?");
-        }
-    }
-
-    public class Human : ISpecies
+    public class Species : ISpecies
     {
         public void Drink()
         {
@@ -40,23 +34,57 @@ namespace DellChallenge.B
             throw new NotImplementedException();
         }
 
+        public virtual void GetSpecies()
+        {
+            Console.WriteLine($"Echo who am I?");
+        }
+    }
+
+    public class Human : Species
+    {
+        public void Swim()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void GetSpecies()
+        {
+            Console.WriteLine($"I am human!");
+        }
+    }
+
+    public class Bird : Species
+    {
         public void Fly()
         {
             throw new NotImplementedException();
         }
 
+        public override void GetSpecies()
+        {
+            Console.WriteLine($"I am bird!");
+        }
+    }
+
+    public class Fish : Species
+    {
         public void Swim()
         {
             throw new NotImplementedException();
         }
+
+        public override void GetSpecies()
+        {
+            Console.WriteLine($"I am fish!");
+        }
     }
 
-    public class Bird
+    public class Groot : Species
     {
-    }
-
-    public class Fish
-    {
+        public override void GetSpecies()
+        {
+            Console.WriteLine($"I am groot!");
+        }
     }
 }
 

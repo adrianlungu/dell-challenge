@@ -16,24 +16,27 @@ namespace DellChallenge.C
 
         private static void StartHere()
         {
-            myObject _MyNewObject = new myObject();
-            int obj1 = _MyNewObject.Do(1, 3);
-            int num2 = _MyNewObject.DoExtended(1, 3, 5);
-            Console.WriteLine(obj1);
-            Console.WriteLine(num2);
+            Calculator calc = new Calculator();
+            int sum1 = calc.Sum(new int[]{ 1, 3});
+            int sum2 = calc.Sum(new int[]{ 1, 3, 5});
+            Console.WriteLine(sum1);
+            Console.WriteLine(sum2);
         }
     }
 
-    class myObject
+    class Calculator
     {
-
-        public int Do(int a, int b)
+        public int Sum(int[] numbers)
         {
-            return a + b;
+            int sum = 0;
+
+            foreach (var item in numbers)
+            {
+                sum += item;
+            }
+
+            return sum;
         }
 
-        public int DoExtended(int a, int b, int c)
-        { return a + b + c;
-        }
     }
 }
